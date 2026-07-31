@@ -9,7 +9,7 @@ def main():
     print("~~Running SNOW17 & SAC-SMA Wrappers~~")
     print(" ")
 
-    lid = 'SFLN2'
+    lid = 'NRKW1'
     # 1. Access a the example data
     nwsrfs_sim = simulation.NwsrfsRun.load_example(lid)
 
@@ -50,7 +50,10 @@ def main():
                             forcings_map = nwsrfs_sim.forcings['map'].to_numpy(),
                             forcings_mat = nwsrfs_sim.forcings['mat'].to_numpy(),
                             forcings_ptps = nwsrfs_sim.forcings['ptps'].to_numpy(),
-                                forcings_etd = nwsrfs_sim.forcings['etd'].to_numpy())
+                            forcings_etd = nwsrfs_sim.forcings['etd'].to_numpy(),
+                            swe_assim=np.zeros_like(nwsrfs_sim.forcings['ptps'].to_numpy()),
+                            ae_assim=np.zeros_like(nwsrfs_sim.forcings['ptps'].to_numpy()),
+                        )
 
     # 4.  Create SacSnowPars wrapper class
     sacsnow_wapper = nwsrfs.SacSnow(pars_dataclass = sacsnow_dc)
@@ -58,6 +61,16 @@ def main():
     # 5.  Return tci
     print("~~Return tci~~")
     print(sacsnow_wapper.sacsnow_tci.head())
+    print(sacsnow_wapper.sacsnow_tci.tail())
+    print(len(sacsnow_wapper.sacsnow_tci))
+    sacsnow_wapper.sacsnow_tci.to_csv("test_streamflow_output.csv")
+    # TODO can get more info like this:
+        # options: ['map_pxadj','etd_peadj','tci','aet', 
+        # 'uztwc','uzfwc','lztwc','lzfsc','lzfpc','adimc', 
+        # 'roimp', 'sdro', 'ssur', 'sif', 'bfs', 'bfp',
+        # 'swe','aesc','neghs','liqw','raim','psfall','prain']    
+    print(sacsnow_wapper.sacsnow_states['swe'].to_csv("test_swe_output.csv"))
+
 
 if __name__ == "__main__":
     main() 

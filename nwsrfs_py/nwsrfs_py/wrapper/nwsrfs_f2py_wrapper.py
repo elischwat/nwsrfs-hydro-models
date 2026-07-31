@@ -96,7 +96,7 @@ class SacSnowPars:
         forcings_ptps(np.ndarray):  Fraction of precipitation as snow array for each timestep (units: fraction 0-1).
         forcings_etd (np.ndarray): Evaporation demand array for each timestep (units: mm).
     '''
-    
+
     year: np.ndarray
     month: np.ndarray
     day: np.ndarray
@@ -112,6 +112,8 @@ class SacSnowPars:
     forcings_mat: np.ndarray
     forcings_ptps: np.ndarray
     forcings_etd: np.ndarray
+    swe_assim: np.ndarray
+    ae_assim: np.ndarray
 
     def __post_init__(self):
 
@@ -202,6 +204,7 @@ class SacSnow():
         pars_dataclass: SacSnowPars,
         validate:bool = True):
 
+        # TODO: This is where we should pass in the SWE data for data-assimilation
         #Assign parameters
         self.sacsnow_pars = pars_dataclass
 
@@ -221,7 +224,8 @@ class SacSnow():
         '''
         #Create a copy to prevent any changes to the par dataclass when running the nwrfs soure code
         pars = copy.deepcopy(self.sacsnow_pars)
-
+        # NOTE: THIS IS A CALL TO FORTRAN CODE!!! -_- woah - Geoffrey
+        # TODO: pass in the swe_states timeseries here, once that variable is define in sac_snow.f90
         self.__raw_output = nwsrfs_source.sacsnow(
             pars.dt_seconds, pars.year, pars.month, pars.day, pars.hour, 
             # general pars
@@ -237,7 +241,9 @@ class SacSnow():
             # forcings
             pars.forcings_map, pars.forcings_ptps, pars.forcings_mat,pars.forcings_etd,
             #Pass states option
-            int(0))
+            int(0),
+            pars.swe_assim, pars.ae_assim
+            )
 
     def __run_wrapper_states(self):
         '''
@@ -262,7 +268,10 @@ class SacSnow():
             # forcings
             pars.forcings_map, pars.forcings_ptps, pars.forcings_mat,pars.forcings_etd,
             #Pass states option
-            int(1))
+            int(1),
+            pars.swe_assim,
+            pars.ae_assim
+            )
 
     @property
     def sacsnow_tci(self) -> 'SACSnowTCI':
