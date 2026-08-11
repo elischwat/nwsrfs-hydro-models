@@ -640,8 +640,8 @@ class NwsrfsRun(_NwrfcAcPrep,
                                 forcings_mat = self.forcings['mat'].to_numpy(),
                                 forcings_ptps = self.forcings['ptps'].to_numpy(),
                                 forcings_etd = self.forcings['etd'].to_numpy(),
-                                swe_assim=np.zeros_like(self.forcings['ptps'].to_numpy()),
-                                ae_assim=np.zeros_like(self.forcings['ptps'].to_numpy()),
+                                swe_assim=np.full(self.forcings['ptps'].to_numpy().shape, 1),
+                                ae_assim=np.full(self.forcings['ptps'].to_numpy().shape, 1),
                                 )
 
         #Initiate sacsnow wrapper class

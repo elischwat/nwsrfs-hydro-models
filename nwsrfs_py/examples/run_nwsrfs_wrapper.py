@@ -13,6 +13,14 @@ def main():
     # 1. Access a the example data
     nwsrfs_sim = simulation.NwsrfsRun.load_example(lid)
 
+
+    df_zone1 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ1.csv")
+    df_zone2 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ2.csv")
+    swe_data = np.array([df_zone1['uofa'].values, df_zone2['uofa'].values]).T
+
+
+    print(df_zone2)
+
     # 2. Get SNOW-17 and SAC-SMA parameters
 
     #Get a nested dictionary for SAC-SMA, Snow17 parameter values
@@ -51,8 +59,8 @@ def main():
                             forcings_mat = nwsrfs_sim.forcings['mat'].to_numpy(),
                             forcings_ptps = nwsrfs_sim.forcings['ptps'].to_numpy(),
                             forcings_etd = nwsrfs_sim.forcings['etd'].to_numpy(),
-                            swe_assim=np.zeros_like(nwsrfs_sim.forcings['ptps'].to_numpy()),
-                            ae_assim=np.zeros_like(nwsrfs_sim.forcings['ptps'].to_numpy()),
+                            swe_assim=swe_data,
+                            ae_assim=np.full(nwsrfs_sim.forcings['ptps'].to_numpy().shape, 1),
                         )
 
     # 4.  Create SacSnowPars wrapper class
