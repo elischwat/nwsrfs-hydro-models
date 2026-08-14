@@ -6,7 +6,7 @@ def main():
     print("Initializing NWSRFS Simulation Example...")
     print(" ")
 
-    lid = 'NRKW1'
+    lid = 'DETO3'
 
     # 1. Access a the example data
     nwsrfs_sim = simulation.NwsrfsRun.load_example(lid)
@@ -34,6 +34,7 @@ def main():
     # 5. Print out simulation
     print('~~~Streamflow Simulation~~')
     print(nwsrfs_sim.sim.head()) 
+    pd.DataFrame(nwsrfs_sim.sim).to_csv("test_streamflow_output.csv")
 
 if __name__ == "__main__":
     main()

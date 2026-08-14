@@ -158,6 +158,14 @@ all_package_files = files(
   'nwsrfs_py/data/NRKW1/results_por_02/optimal_states_6hr.csv',
   'nwsrfs_py/data/NRKW1/results_por_02/lagk_tables.csv',
 
+  # DETO3 Data
+  'nwsrfs_py/data/DETO3/__init__.py',
+  'nwsrfs_py/data/DETO3/forcing_por_DETO3-2.csv',
+  'nwsrfs_py/data/DETO3/forcing_por_DETO3-1.csv',
+  'nwsrfs_py/data/DETO3/flow_daily_DETO3.csv',
+
+  # DETO3 Results
+
   # Adjustq check
   'nwsrfs_py/data/Adjustq_check/__init__.py',
   'nwsrfs_py/data/Adjustq_check/NRKW1_w_sim.csv',

@@ -9,7 +9,7 @@ def main():
     print("~~Running SNOW17 & SAC-SMA Wrappers~~")
     print(" ")
 
-    lid = 'SFLN2'
+    lid = 'DETO3'
     # 1. Access a the example data
     nwsrfs_sim = simulation.NwsrfsRun.load_example(lid)
 
