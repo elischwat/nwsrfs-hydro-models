@@ -95,6 +95,8 @@ class SacSnowPars:
         forcings_mat(np.ndarray): Air temperature array for each timestep (units: degc).
         forcings_ptps(np.ndarray):  Fraction of precipitation as snow array for each timestep (units: fraction 0-1).
         forcings_etd (np.ndarray): Evaporation demand array for each timestep (units: mm).
+        swe_assim: np.ndarray:      SWE data (usually observations) that are assimilated into the model at each time step
+        ae_assim: np.ndarray:       Snow covered aerial extent data (usually observations) that are assimilated into the model at each time step
     '''
 
     year: np.ndarray

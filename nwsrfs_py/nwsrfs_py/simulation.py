@@ -366,7 +366,10 @@ class NwsrfsRun(_NwrfcAcPrep,
                 run_dir: str | None = None,
                 forcing_adj: bool | list[str] = True,
                 return_inst: bool = True,
-                shift_sf: bool = True):
+                shift_sf: bool = True,
+                swe_assim_data: np.array = None, 
+                ae_assim_data: np.array = None,
+                ):
 
         #Initiate nwsrfs_prep  
         _NwrfcAcPrep.__init__(self, autocalb_dir, run_dir)
@@ -378,6 +381,9 @@ class NwsrfsRun(_NwrfcAcPrep,
 
         #Validate forcing_adj argument
         self._interrogate_fa_arg(forcing_adj)
+        
+        self.swe_assim_data = swe_assim_data
+        self.ae_assim_data = ae_assim_data
 
         #Create instances of all relevant NWSRFS models
         self.nwsrfs_run()
@@ -640,8 +646,8 @@ class NwsrfsRun(_NwrfcAcPrep,
                                 forcings_mat = self.forcings['mat'].to_numpy(),
                                 forcings_ptps = self.forcings['ptps'].to_numpy(),
                                 forcings_etd = self.forcings['etd'].to_numpy(),
-                                swe_assim=np.full(self.forcings['ptps'].to_numpy().shape, 1),
-                                ae_assim=np.full(self.forcings['ptps'].to_numpy().shape, 1),
+                                swe_assim=self.swe_assim_data,
+                                ae_assim=self.ae_assim_data,
                                 )
 
         #Initiate sacsnow wrapper class
@@ -1133,6 +1139,10 @@ class NwsrfsRun(_NwrfcAcPrep,
         #Return :class:`nwsrfs_py.simulation.Nwsrfs` for the lid specified.
         with utils._get_example_dir(lid) as example_dir:
             # Note: Ensure __init__ loads all data BEFORE the context manager closes
-            return cls(example_dir, config[lid], **kwargs)
+            return cls(
+                example_dir, 
+                config[lid], 
+                **kwargs
+            )
 
 
