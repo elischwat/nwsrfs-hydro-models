@@ -7,12 +7,16 @@ def main():
     print(" ")
 
     lid = 'NRKW1'
-    streamflow_output_fn = "NRKW1_assim.csv"
+    streamflow_output_fn = "NRKW1_assim_uofa_with_ae.csv"
 
-    df_zone1 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ1.csv")
-    df_zone2 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ2.csv")
-    swe_data = np.array([df_zone1['snodas'].values, df_zone2['snodas'].values]).T
-    ae_data = np.full(swe_data.shape, 1.0)
+    swe_df_zone1 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ1.csv")
+    swe_df_zone2 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ2.csv")
+    swe_data = np.array([swe_df_zone1['uofa'].values, swe_df_zone2['uofa'].values]).T
+
+    ae_df_zone1 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/ae_timeseries_NRKW1XZ1.csv")
+    ae_df_zone2 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/ae_timeseries_NRKW1XZ2.csv")
+    ae_data = np.array([ae_df_zone1['uofa'].values, ae_df_zone2['uofa'].values]).T
+
     print(swe_data.max())
     # 1. Access a the example data
     nwsrfs_sim = simulation.NwsrfsRun.load_example(lid, swe_assim_data=swe_data, ae_assim_data=ae_data)
