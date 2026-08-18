@@ -513,14 +513,14 @@ C     SNOW GONE - SET ALL CARRYOVER TO NO SNOW CONDITIONS.
   151 CONTINUE
       PACKRO=GMRO+MELT+TEX+STORGE+RAIN
       CALL ZERO19
-      AESC=0.0
+      ! AESC=0.0
       SNDEN=-9.99
       GO TO 190
 C.......................................
 C     NO SNOW COVER - NO NEW SNOWFALL.
   160 ROBG=PXI
       PACKRO=0.0
-      AESC=0.0
+      ! AESC=0.0
       SROBG=SROBG+ROBG
 C.......................................
 C     COMPUTE RAIN+MELT

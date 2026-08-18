@@ -19,7 +19,11 @@ def main():
 
     print(swe_data.max())
     # 1. Access a the example data
-    nwsrfs_sim = simulation.NwsrfsRun.load_example(lid, swe_assim_data=swe_data, ae_assim_data=ae_data)
+    nwsrfs_sim = simulation.NwsrfsRun.load_example(
+        lid, 
+        swe_assim_data=swe_data, 
+        ae_assim_data=ae_data
+    )
 
     # 2. Print out the configuration
     print(f'~~Model Configuration~~')
