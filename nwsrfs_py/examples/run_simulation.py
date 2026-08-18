@@ -45,6 +45,7 @@ def main():
     print('~~~Streamflow Simulation~~')
     print(nwsrfs_sim.sim.head()) 
     print(nwsrfs_sim.sim.to_csv(streamflow_output_fn)) 
-
+    nwsrfs_sim.sacsnow_states['aesc'].to_csv(streamflow_output_fn.replace(".csv", "_aesc.csv"))
+    nwsrfs_sim.sacsnow_states['swe'].to_csv(streamflow_output_fn.replace(".csv", "_swe.csv"))
 if __name__ == "__main__":
     main()

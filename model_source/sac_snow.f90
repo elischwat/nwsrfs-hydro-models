@@ -431,7 +431,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
           !SNOW17 INPUT AND OUTPUT VARIABLES
           real(map_step), real(ptps(i,nh)), real(mat(i,nh)), &
           raim_sp, sneqv_sp, snow_sp, snowh_sp, psfall_sp, prain_sp, aesc_sp,&
-          ! TODO: This aesc_sp variable contains aerial extent states that are missed to snow19 for the next model timestep
+          ! TODO: This aesc_sp variable contains aerial extent states that are passed to snow19 for the next model timestep
           !SNOW17 PARAMETERS
           !ALAT,SCF,MFMAX,MFMIN,UADJ,SI,NMF,TIPM,MBASE,PXTEMP,PLWHC,DAYGM,ELEV,PA,ADC
           real(latitude(nh)), real(scf(nh)), real(mfmax(nh)), real(mfmin(nh)), &
