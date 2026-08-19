@@ -850,7 +850,7 @@ C     NOSNOW=1 RESULTS.
       SRM=SRM+PPX(I)
       SROBG=SROBG+PPX(I)
       TWE=0.0
-      PCOVER=0.0
+      PCOVER=AESC
       IF (LRM.EQ.0) GO TO 152
       J=LPX-(NDT-I)
       RM(J)=PPX(I)
