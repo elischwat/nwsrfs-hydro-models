@@ -294,7 +294,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
 
       psfall_sp = real(0)
       prain_sp = real(0)
-      aesc_sp = real(0)
+      aesc_sp = ae_assim(1,nh)
       roimp_sp = real(0)
       sdro_sp = real(0)
       ssur_sp = real(0)
