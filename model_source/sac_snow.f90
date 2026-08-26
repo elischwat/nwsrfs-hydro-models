@@ -287,14 +287,15 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
       adimc_sp = real(spin_up_end_states(6))
 
       ! inital swe will usually be 0, except for glaciers 
-      cs(1) = real(init_swe(nh))
+      ! cs(1) = real(init_swe(nh))
+      cs(1) = 0
       ! set the rest to zero
       cs(2:19) = 0.0
       taprev_sp = real(mat(1,nh))
 
       psfall_sp = real(0)
       prain_sp = real(0)
-      aesc_sp = ae_assim(1,nh)
+      aesc_sp = real(0)
       roimp_sp = real(0)
       sdro_sp = real(0)
       ssur_sp = real(0)
@@ -395,7 +396,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
 
     ! initialize first/main component of SWE (model 'WE')
     ! inital swe will usually be 0, except for glaciers 
-    cs(1) = real(init_swe(nh))
+    cs(1) = real(0)
     ! set the rest to zero
     cs(2:19) = 0.0
     taprev_sp = real(mat(1,nh))
@@ -422,7 +423,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
       etd_step = etd(i,nh) * peadj(nh) 
 
       ! Do the data assimilation of snow information here
-      aesc_sp = ae_assim(i,nh)
+      ! cs(7) = ae_assim(i,nh)
       cs(1) = swe_assim(i,nh)
       ! TODO: We want to over-write the `aesc_sp` variable here, before we provide Aerial-Extent model state to exsnow19
       ! TODO: We want to over-write the `cs` variable here, before we provide SWE model state to exsnow19. Note that `cs`
