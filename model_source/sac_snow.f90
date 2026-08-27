@@ -227,6 +227,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
 
   ! ========================= ZONE AREA LOOP ========================================================
   !   loop through the zones, running the lumped model code for each
+
   do nh=1,n_hrus
     ! print*, 'Running area',nh,'out of',n_hrus
 
@@ -287,8 +288,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
       adimc_sp = real(spin_up_end_states(6))
 
       ! inital swe will usually be 0, except for glaciers 
-      ! cs(1) = real(init_swe(nh))
-      cs(1) = 0
+      cs(1) = real(init_swe(nh))
       ! set the rest to zero
       cs(2:19) = 0.0
       taprev_sp = real(mat(1,nh))
@@ -396,7 +396,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
 
     ! initialize first/main component of SWE (model 'WE')
     ! inital swe will usually be 0, except for glaciers 
-    cs(1) = real(0)
+    cs(1) = real(init_swe(nh))
     ! set the rest to zero
     cs(2:19) = 0.0
     taprev_sp = real(mat(1,nh))
@@ -413,7 +413,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
     
     ! =============== START SIMULATION TIME LOOP =====================================
     do i = 1,sim_length,1
-      
+
       ! dummy use of the hour variable to shut the compiler up, 
       ! we may want to use the hour as an input in the future
       if(i .eq. 1) houri = hour(i)
@@ -423,16 +423,12 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
       etd_step = etd(i,nh) * peadj(nh) 
 
       ! Do the data assimilation of snow information here
-      ! cs(7) = ae_assim(i,nh)
       cs(1) = swe_assim(i,nh)
-      ! TODO: We want to over-write the `aesc_sp` variable here, before we provide Aerial-Extent model state to exsnow19
-      ! TODO: We want to over-write the `cs` variable here, before we provide SWE model state to exsnow19. Note that `cs`
-      !       actually contains a bunch of info about snow state (Temp, water content, etc, many more). cs(1) is the WE variable. 
+
       call exsnow19(int(dt/sec_hour,4),int(day(i),4),int(month(i),4),int(year(i),4),&
           !SNOW17 INPUT AND OUTPUT VARIABLES
           real(map_step), real(ptps(i,nh)), real(mat(i,nh)), &
           raim_sp, sneqv_sp, snow_sp, snowh_sp, psfall_sp, prain_sp, aesc_sp,&
-          ! TODO: This aesc_sp variable contains aerial extent states that are passed to snow19 for the next model timestep
           !SNOW17 PARAMETERS
           !ALAT,SCF,MFMAX,MFMIN,UADJ,SI,NMF,TIPM,MBASE,PXTEMP,PLWHC,DAYGM,ELEV,PA,ADC
           real(latitude(nh)), real(scf(nh)), real(mfmax(nh)), real(mfmin(nh)), &
@@ -441,8 +437,6 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
           real(elev(nh)), real(pa), real(adc_x), &
           !SNOW17 CARRYOVER VARIABLES
           cs, taprev_sp) 
-          ! TODO: This cs variable contains SWE states that are missed to snow19 for the next model timestep
-          ! TODO: what is cs? there are three values, see line 499
 
 
       ! taprev does not get updated in place like cs does
@@ -496,8 +490,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
         prain(i,nh) = dble(prain_sp)
         neghs(i,nh) = dble(cs(2))
         liqw(i,nh) = dble(cs(3))
-        ! TODO: This is where the Aerial Extent value is saved to memory
-        aesc(i,nh) = dble(aesc_sp) 
+        aesc(i,nh) = dble(aesc_sp)
 
         nexlag = 5/int(dt/sec_hour) + 2
 
@@ -505,7 +498,7 @@ subroutine sacsnow(n_hrus, dt, sim_length, year, month, day, hour, &
         DO j = 1,nexlag,1
           TEX = TEX+dble(cs(10+j))
         END DO
-         ! TODO: This is where the SWE value is saved to memory
+
         swe(i,nh) = dble(cs(1))+dble(cs(3))+dble(cs(9))+TEX
       end if
 
