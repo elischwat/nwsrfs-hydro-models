@@ -1118,6 +1118,7 @@ class NwsrfsRun(_NwrfcAcPrep,
         lid = lid.upper()
         # Define the mapping within the method to keep it clean
         config = {
+            'HHDW1': 'results_por_03',
             'DETO3': 'results_por_03',
             'NRKW1': 'results_por_02',
             'SFLN2': 'results_por_01'

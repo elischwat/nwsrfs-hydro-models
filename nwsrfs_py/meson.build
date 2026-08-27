@@ -166,6 +166,14 @@ all_package_files = files(
 
   # DETO3 Results
 
+  # HHDW1 Data
+  'nwsrfs_py/data/HHDW1/__init__.py',
+  'nwsrfs_py/data/HHDW1/forcing_por_HHDW1-2.csv',
+  'nwsrfs_py/data/HHDW1/forcing_por_HHDW1-1.csv',
+  'nwsrfs_py/data/HHDW1/flow_daily_HHDW1.csv',
+
+  # HHDW1 Results
+
   # Adjustq check
   'nwsrfs_py/data/Adjustq_check/__init__.py',
   'nwsrfs_py/data/Adjustq_check/NRKW1_w_sim.csv',
