@@ -7,7 +7,7 @@ def main():
     print(" ")
 
     lid = 'NRKW1'
-    streamflow_output_fn = "NRKW1_assim_uofa_with_ae.csv"
+    streamflow_output_fn = "NRKW1_assim_uofa.csv"
 
     swe_df_zone1 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ1.csv")
     swe_df_zone2 = pd.read_csv("/Users/elischwat/Development/snow_product_compare/swe_timeseries_NRKW1XZ2.csv")
@@ -36,14 +36,14 @@ def main():
     print(" ")
 
     # 3.  Print out unit hydrograph
-    print('~~~UNIT-HG~~')
-    print(nwsrfs_sim.uh)
-    print(" ")
+    # print('~~~UNIT-HG~~')
+    # print(nwsrfs_sim.uh)
+    # print(" ")
 
-    # 4.  Print out unit hydrograph
-    print('~~~Monthly Climatological Forcing Adjustments~~')
-    print(nwsrfs_sim.fa_factors)
-    print(" ")
+    # # 4.  Print out unit hydrograph
+    # print('~~~Monthly Climatological Forcing Adjustments~~')
+    # print(nwsrfs_sim.fa_factors)
+    # print(" ")
 
     # 5. Print out simulation
     print('~~~Streamflow Simulation~~')
